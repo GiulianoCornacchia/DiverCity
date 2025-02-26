@@ -51,8 +51,12 @@ This project uses the following versions:
 <a id='abstract' name='abstract'></a>
 ## Abstract
 
-The proliferation of human-AI ecosystems involving human interaction with algorithms, such as assistants and recommenders, raises concerns about large-scale social behaviour. Despite evidence of such phenomena across several contexts, the collective impact of GPS navigation services remains unclear: while beneficial to the user, they can also cause chaos if too many vehicles are driven through the same few roads.  
-Our study employs a simulation framework to assess navigation services' influence on road network usage and CO2 emissions. The results demonstrate a universal pattern of amplified conformity: increasing adoption rates of navigation services cause a reduction of route diversity of mobile travellers and increased concentration of traffic and emissions on fewer roads, thus exacerbating an unequal distribution of negative externalities on selected neighbourhoods.
-Although navigation services recommendations can help reduce CO2 emissions when their adoption rate is low, these benefits diminish or even disappear when the adoption rate is high and exceeds a certain city- and service-dependent threshold.
-We summarize these discoveries in a non-linear function that connects the marginal increase of conformity with the marginal reduction in CO2 emissions.
-Our simulation approach addresses the challenges posed by the complexity of transportation systems and the lack of data and algorithmic transparency.
+The structure of road networks significantly impacts various urban dynamics, from traffic congestion to environmental sustainability and equitable access to services. 
+Recent studies reveal that most roads are underutilized, faster alternative routes are often overlooked, and traffic is typically concentrated on a few corridors.
+In this article, we examine how road network topology, and in particular the presence of mobility attractors (e.g., highways and ring roads), shapes the counterpart to traffic concentration: route diversification. 
+To this end, we introduce DiverCity, a measure that quantifies the extent to which traffic can potentially be distributed across multiple, loosely overlapping routes.  
+Analyzing 56 global cities with diverse population densities and road network topologies, we find that DiverCity is closely tied to traffic efficiency and network characteristics such as network extensiveness and number of intersections. 
+Within cities, DiverCity increases with distance from the city center before stabilizing in the periphery but declines in the proximity of mobility attractors.
+We demonstrate that strategic speed limit adjustments on mobility attractors can increase DiverCity while preserving travel efficiency.
+We isolate the complex interplay between mobility attractors and DiverCity through simulations in a controlled setting, confirming the patterns observed in real-world cities. 
+DiverCity provides a practical tool for urban planners and policymakers to optimize road network design and balance route diversification, efficiency, and sustainability.
