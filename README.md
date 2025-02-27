@@ -75,8 +75,7 @@ The repository consists of several Jupyter Notebooks and Python scripts designed
 
 ### Scripts
 
-- ** `compute_divercity_osm.py`**:
-
+- **`compute_divercity_osm.py`**:
 This is the main script for computing DiverCity metrics using the radial sampling method and path penalization technique. It loads or downloads the road network, performs radial sampling, computes alternative routes, and calculates DiverCity metrics. Results are saved as JSON files for further analysis and visualization.
 
 ---
