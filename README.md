@@ -49,14 +49,8 @@ This project uses the following versions:
 - **Python**: The code is written in Python 3.9.18.
 
 <a id='abstract' name='abstract'></a>
-## Abstract
+## Overview
 
-The structure of road networks significantly impacts various urban dynamics, from traffic congestion to environmental sustainability and equitable access to services. 
-Recent studies reveal that most roads are underutilized, faster alternative routes are often overlooked, and traffic is typically concentrated on a few corridors.
-In this article, we examine how road network topology, and in particular the presence of mobility attractors (e.g., highways and ring roads), shapes the counterpart to traffic concentration: route diversification. 
-To this end, we introduce DiverCity, a measure that quantifies the extent to which traffic can potentially be distributed across multiple, loosely overlapping routes.  
-Analyzing 56 global cities with diverse population densities and road network topologies, we find that DiverCity is closely tied to traffic efficiency and network characteristics such as network extensiveness and number of intersections. 
-Within cities, DiverCity increases with distance from the city center before stabilizing in the periphery but declines in the proximity of mobility attractors.
-We demonstrate that strategic speed limit adjustments on mobility attractors can increase DiverCity while preserving travel efficiency.
-We isolate the complex interplay between mobility attractors and DiverCity through simulations in a controlled setting, confirming the patterns observed in real-world cities. 
-DiverCity provides a practical tool for urban planners and policymakers to optimize road network design and balance route diversification, efficiency, and sustainability.
+The structure of road networks significantly impacts urban dynamics, influencing traffic congestion, environmental sustainability, and equitable access to services. DiverCity quantifies the potential for distributing traffic across multiple, loosely overlapping routes, revealing how road network topology and mobility attractors (e.g., highways and ring roads) influence route diversification. Analyzing 56 global cities, this study shows that DiverCity is linked to traffic efficiency and network characteristics such as extensiveness and number of intersections. Additionally, strategic speed limit adjustments on mobility attractors can increase DiverCity while preserving travel efficiency.
+
+An interactive platform is available to explore the spatial distribution of DiverCity in the cities analyzed: https://divercitymaps.github.io
