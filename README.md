@@ -56,6 +56,61 @@ The structure of road networks significantly impacts urban dynamics, influencing
 An interactive platform is available to explore the spatial distribution of DiverCity in the cities analyzed: https://divercitymaps.github.io
 
 
+## The DiverCity Measure in a Nutshell
+
+### How Many Ways Can You Get There?
+
+How many ways can you get from home to your favorite café? And how different are those routes from each other?
+
+**DiverCity** answers this by measuring:
+- **How many practical alternative routes exist between two points?**
+- **How different are those routes from each other?**
+
+It analyzes **Near-Shortest Routes (NSRs)**—paths that are only slightly longer than the fastest route—by focusing on:
+1. **Number of Alternatives**: How many NSRs are available.
+2. **Spatial Spread**: How diverse these routes are, calculated using **Weighted Jaccard Similarity** to measure overlap.
+
+The DiverCity of a trip from home to the café is calculated as:
+
+$D(\text{Home}, \text{Café}) = S(NSR(\text{Home}, \text{Café})) \cdot |NSR(\text{Home}, \text{Café})|$
+
+Where:
+- $NSR(\text{Home}, \text{Café})$ is the set of near-shortest routes.
+- $S(NSR(\text{Home}, \text{Café}))$ is the spatial spread of these routes:
+
+$S(NSR) = 1 - J(NSR)$, where $J$ is the average pair-wise weighted Jaccard similarity among the NSR.
+
+---
+
+### Why It Matters
+
+DiverCity shows how well a city’s road network can distribute traffic across multiple routes. It helps:
+- **Urban Planners** design more balanced traffic flows.
+- **Policymakers** assess the impact of interventions like speed limit adjustments.
+- **Researchers** explore how network structures influence urban mobility.
+
+By quantifying route diversification, DiverCity identifies areas within a city that are more prone to congestion due to limited alternative routes.
+
+---
+
+### Real-World Insights
+
+- **High Diversification**: Grid-structured cities (e.g., Chicago, New York) offer more diverse route options.
+- **Low Diversification**: Cities like **Mumbai** and **Rome** concentrate traffic through fewer corridors.
+- **Mobility Attractors Impact**: DiverCity decreases near highways and ring roads, which channel traffic through fast corridors, reducing route diversity nearby.
+
+---
+
+### Explore DiverCity
+
+Discover route diversification in 56 global cities using our **interactive platform**. Choose any two points to:
+- Compute alternative routes and measure their DiverCity.
+- Visualize route diversification as a heatmap.
+
+Try it out: [https://divercitymaps.github.io](https://divercitymaps.github.io)
+
+
+---
 
 ## Code Descriptions
 
