@@ -69,13 +69,13 @@ It analyzes **Near-Shortest Routes (NSRs)**—paths that are only slightly longe
 1. **Number of Alternatives**: How many NSRs are available.
 2. **Spatial Spread**: How diverse these routes are, calculated using **Weighted Jaccard Similarity** to measure overlap.
 
-The DiverCity of a trip from home (🏡) to the café (☕️) is calculated as:
+The DiverCity of a trip from home to the café is calculated as:
 
-$D(\text{🏡}, \text{Café}) = S(NSR(\text{🏡}, \text{☕️})) \cdot |NSR(\text{🏡}, \text{☕️})|$
+$D(\text{home}, \text{Café}) = S(NSR(\text{home}, \text{cafè})) \cdot |NSR(\text{home}, \text{cafè})|$
 
 Where:
-- $NSR(\text{🏡}, \text{☕️})$ is the set of near-shortest routes.
-- $S(NSR(\text{🏡}, \text{☕️}))$ is the spatial spread of these routes:
+- $NSR(\text{home}, \text{cafè})$ is the set of near-shortest routes.
+- $S(NSR(\text{home}, \text{cafè}))$ is the spatial spread of these routes:
 
 $S(NSR) = 1 - J(NSR)$, where $J$ is the average pair-wise weighted Jaccard similarity among the NSR.
 
