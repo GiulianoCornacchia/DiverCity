@@ -14,9 +14,7 @@
 
 * Marta C. Gonzalez <sup>4,5,6</sup> [<img src="https://img.shields.io/badge/ORCID--0000--0002--8482--0318-brightgreen?logo=orcid&logoColor=white" alt="ORCID" height="16">](https://orcid.org/0000-0002-8482-0318)
 
-
-
-
+<p style="font-size: xx-small;">
 Affiliations:<br>
 <sup>1</sup> Institute of Information Science and Technologies (ISTI), National Research Council (CNR), Pisa, Italy <br>
 <sup>2</sup> Department of Computer Science, University of Pisa, Pisa, Italy <br>
@@ -24,7 +22,7 @@ Affiliations:<br>
 <sup>4</sup> Department of City and Regional Planning, University of California, Berkeley, CA, USA <br>
 <sup>5</sup> Energy Technologies Area, Lawrence Berkeley National Laboratory, Berkeley, CA, USA <br>
 <sup>6</sup> Department of Civil and Environmental Engineering, University of California, Berkeley, CA, USA <br>
-
+</p>
 
 ____
 
@@ -62,6 +60,7 @@ An interactive platform is available to explore the spatial distribution of Dive
 
 How many ways can you get from home to your favorite café? And how different are those routes from each other?
 
+
 **DiverCity** answers this by measuring:
 - **How many practical alternative routes exist between two points?**
 - **How different are those routes from each other?**
@@ -70,13 +69,13 @@ It analyzes **Near-Shortest Routes (NSRs)**—paths that are only slightly longe
 1. **Number of Alternatives**: How many NSRs are available.
 2. **Spatial Spread**: How diverse these routes are, calculated using **Weighted Jaccard Similarity** to measure overlap.
 
-The DiverCity of a trip from home to the café is calculated as:
+The DiverCity of a trip from home (🏡) to the café (☕️) is calculated as:
 
-$D(\text{Home}, \text{Café}) = S(NSR(\text{Home}, \text{Café})) \cdot |NSR(\text{Home}, \text{Café})|$
+$D(\text{🏡}, \text{Café}) = S(NSR(\text{🏡}, \text{☕️})) \cdot |NSR(\text{🏡}, \text{☕️})|$
 
 Where:
-- $NSR(\text{Home}, \text{Café})$ is the set of near-shortest routes.
-- $S(NSR(\text{Home}, \text{Café}))$ is the spatial spread of these routes:
+- $NSR(\text{🏡}, \text{☕️})$ is the set of near-shortest routes.
+- $S(NSR(\text{🏡}, \text{☕️}))$ is the spatial spread of these routes:
 
 $S(NSR) = 1 - J(NSR)$, where $J$ is the average pair-wise weighted Jaccard similarity among the NSR.
 
