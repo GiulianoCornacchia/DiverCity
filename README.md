@@ -1,5 +1,5 @@
 <div align="center">
-  <h2>A universal framework for route diversification in road networks</h2> 
+  <h1>A universal framework for route diversification in road networks</h1> 
 </div>
 
 ### Authors:
