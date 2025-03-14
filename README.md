@@ -71,11 +71,11 @@ It analyzes **Near-Shortest Routes (NSRs)**—paths that are only slightly longe
 
 The DiverCity of a trip from home to the café is calculated as:
 
-$D(\text{home}, \text{Café}) = S(NSR(\text{home}, \text{cafè})) \cdot |NSR(\text{home}, \text{cafè})|$
+$D(\text{home}, \text{café}) = S(NSR(\text{home}, \text{cafè})) \cdot |NSR(\text{home}, \text{cafè})|$
 
 Where:
 - $NSR(\text{home}, \text{cafè})$ is the set of near-shortest routes.
-- $S(NSR(\text{home}, \text{cafè}))$ is the spatial spread of these routes:
+- $S(NSR(\text{home}, \text{cafè}))$ is the spatial spread of these routes.
 
 $S(NSR) = 1 - J(NSR)$, where $J$ is the average pair-wise weighted Jaccard similarity among the NSR.
 
