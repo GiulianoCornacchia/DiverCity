@@ -180,6 +180,17 @@ The repository consists of several Jupyter Notebooks and Python scripts designed
 
 ---
 
+### Data Folder
+
+The **`data/`** folder includes supporting files for reproducing the analyses presented in the paper.
+
+* **`city_info.csv`** lists the **56 cities** analyzed in the study, with their corresponding **name, latitude, and longitude**, as used to initialize each computation.
+* A **sample road network** for **Milan** (`milan_drive_15000.graphml.gz`) is also provided, allowing users to test the workflow.
+
+---
+
+
+
 #### Parameters Table for `compute_divercity_osm.py`
 
 | Parameter           | Description                                                     | Required | Default Value        |
