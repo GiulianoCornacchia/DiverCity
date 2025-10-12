@@ -27,6 +27,22 @@ Affiliations:<br>
 ____
 
 Pre-print: https://www.arxiv.org/abs/2510.02582
+
+If you use the code in this repository, please cite our paper:
+
+```
+@misc{cornacchia2025divercity,
+      title={A computational framework for quantifying route diversification in road networks}, 
+      author={Giuliano Cornacchia and Luca Pappalardo and Mirco Nanni and Dino Pedreschi and Marta C. González},
+      year={2025},
+      eprint={2510.02582},
+      archivePrefix={arXiv},
+      primaryClass={physics.soc-ph},
+      url={https://arxiv.org/abs/2510.02582}, 
+}
+```
+
+
 ____
 
 
