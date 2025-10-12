@@ -1,6 +1,6 @@
 <div align="center">
   <h1>A computational framework for quantifying route diversification in road networks</h1> 
-  <img src="images/image_divercity.png" width="700">
+  <img src="images/image_divercity.PNG" width="700">
 </div>
 
 ### Authors:
