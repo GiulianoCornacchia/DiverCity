@@ -131,7 +131,7 @@ The repository consists of several Jupyter Notebooks and Python scripts designed
 * **`2_Compute_DiverCity.ipynb`**:
   This notebook performs the computation of **DiverCity** metrics for a given city. It first generates origin-destination pairs through **radial sampling** around the city center, ensuring spatial coverage across multiple distances. For each pair, it uses the **path penalization** algorithm to generate up to *k* alternative near-shortest routes and calculates DiverCity by combining their number and spatial spread.
 
-* **`3_Attractors_measures.ipynb`**:
+* **`3_Attractors_Measures.ipynb`**:
   This notebook analyzes **mobility attractors**, defined as high-capacity infrastructures such as highways, ring roads, and major arterial roads. It computes attractor-related measures, including total length, spatial density, and spatial dispersion, by sampling random points and measuring their distance to the nearest attractor. The outputs help quantify how the configuration of attractors influences route diversification.
 
 * **`4_Simplified_Model.ipynb`**:
