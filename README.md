@@ -26,7 +26,7 @@ Affiliations:<br>
 
 ____
 
-Pre-print coming soon
+Pre-print: https://www.arxiv.org/abs/2510.02582
 ____
 
 
@@ -42,9 +42,10 @@ ____
 
 This project uses the following versions:
 
-![Python](https://img.shields.io/badge/Python-3.9.18-blue)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
 
-- **Python**: The code is written in Python 3.9.18.
+* **Python**: 3.10 (recommended). The code uses OSMnx + igraph and parallel processing.
+* `environment.yml` is provided for reproducibility. Install via `conda env create -f environment.yml`.
 
 <a id='abstract' name='abstract'></a>
 ## Overview
@@ -58,26 +59,31 @@ An interactive platform is available to explore the spatial distribution of Dive
 
 ### How Many Ways Can You Get There?
 
-How many ways can you get from home to your favorite café? And how different are those routes from each other?
+How many different ways can you get from home to your favorite café? And how different are those routes from one another?
 
+**DiverCity** measures both the *number* and the *diversity* of practical route alternatives between two points in a road network. It answers two main questions:
 
-**DiverCity** answers this by measuring:
-- **How many practical alternative routes exist between two points?**
-- **How different are those routes from each other?**
+* **How many near-shortest routes exist between two points?**
+* **How spatially different are these routes from each other?**
 
-It analyzes **Near-Shortest Routes (NSRs)**—paths that are only slightly longer than the fastest route—by focusing on:
-1. **Number of Alternatives**: How many NSRs are available.
-2. **Spatial Spread**: How diverse these routes are, calculated using **Weighted Jaccard Similarity** to measure overlap.
+It focuses on **Near-Shortest Routes (NSRs)**, paths that are only slightly longer than the fastest one, by combining:
 
-The DiverCity of a trip from home to the café is calculated as:
+1. **Number of Alternatives**: The count of NSRs found between an origin and a destination.
+2. **Spatial Spread**: How different those NSRs are, quantified using the **Weighted Jaccard Similarity** between their edges.
 
-$D(\text{home}, \text{café}) = S(NSR(\text{home}, \text{cafè})) \cdot |NSR(\text{home}, \text{cafè})|$
+Formally, the DiverCity of a trip from *home* to *café* is defined as:
+
+$D(\text{home}, \text{café}) = S(NSR(\text{home}, \text{café})) \cdot |NSR(\text{home}, \text{café})|$
 
 Where:
-- $NSR(\text{home}, \text{cafè})$ is the set of near-shortest routes.
-- $S(NSR(\text{home}, \text{cafè}))$ is the spatial spread of these routes.
 
-$S(NSR) = 1 - J(NSR)$, where $J$ is the average pair-wise weighted Jaccard similarity among the NSR.
+* $NSR(\text{home}, \text{café})$ is the set of near-shortest routes.
+* $|NSR|$ is the number of routes in that set.
+* $S(NSR) = 1 - J(NSR)$ measures the spatial spread of the routes.
+* $J(NSR)$ is the average pairwise weighted Jaccard similarity among all NSRs, representing their overlap.
+
+A high DiverCity means that multiple distinct routes exist with comparable travel times.
+A low DiverCity means that all practical routes are nearly identical, following the same main roads.
 
 ---
 
@@ -119,18 +125,45 @@ The repository consists of several Jupyter Notebooks and Python scripts designed
 
 ### Notebooks
 
-- **`1_Download_Road_Network.ipynb`**:  
-  This notebook is responsible for downloading the road network data of a city using OpenStreetMap (OSMnx). It saves the road network in a compressed GraphML format for efficient storage and loading.
+* **`1_Download_Road_Network.ipynb`**:
+  This notebook downloads the road network of a selected city using **OpenStreetMap** data via **OSMnx**. The user specifies the city name and coordinates, and the notebook extracts the `drive` network within a chosen radius. The resulting graph is enriched with edge attributes such as length, speed, and travel time, and is then saved as a compressed **GraphML** file for later use.
 
-- **`2_Compute_DiverCity.ipynb`**:  
-  This notebook computes DiverCity metrics, which quantify route diversification by analyzing alternative routes between origin-destination pairs within a city. It leverages radial sampling to gnere origin-destination pairs and path penalization to generate alternative routes. It computes DiverCity for each trip considering number and the spatial spread of near-shortest routes.
+* **`2_Compute_DiverCity.ipynb`**:
+  This notebook performs the computation of **DiverCity** metrics for a given city. It first generates origin-destination pairs through **radial sampling** around the city center, ensuring spatial coverage across multiple distances. For each pair, it uses the **path penalization** algorithm to generate up to *k* alternative near-shortest routes and calculates DiverCity by combining their number and spatial spread.
+
+* **`3_Attractors_measures.ipynb`**:
+  This notebook analyzes **mobility attractors**, defined as high-capacity infrastructures such as highways, ring roads, and major arterial roads. It computes attractor-related measures, including total length, spatial density, and spatial dispersion, by sampling random points and measuring their distance to the nearest attractor. The outputs help quantify how the configuration of attractors influences route diversification.
+
+* **`4_Simplified_Model.ipynb`**:
+  This notebook introduces a **synthetic grid-based model** to test DiverCity mechanisms in a controlled environment. It creates artificial networks with configurable parameters such as attractor corridors, water bodies, and bridges, and then simulates speed adjustments and attractor placement. The results confirm how network structure and speed limits affect route diversification independently of real-world complexities.
+
+* **`5a_Plot_Routes.ipynb`**:
+  This notebook visualizes the alternative routes generated for selected origin-destination pairs. It highlights **near-shortest routes (NSR)** and compares them with longer alternatives to show how route overlap and diversity vary across cities and scenarios. The visualizations help interpret DiverCity values in geographic terms.
+
+* **`5b_Maps_DiverCity.ipynb`**:
+  This notebook creates **spatial maps** of DiverCity within a city. It computes node-level DiverCity by aggregating trip-level measures and interpolates the values across the urban area. The resulting heatmaps illustrate how route diversification changes with distance from the city center and near mobility attractors.
+
+* **`6_Figures.ipynb`**:
+  This notebook reproduces the **main figures** of the DiverCity study. It uses processed results to generate plots such as DiverCity distributions across cities, DiverCity versus radial distance, and DiverCity improvements under speed-limit adjustments. Each figure corresponds to those presented in the paper and supports visual validation of the study’s findings.
 
 ---
 
-### Scripts
+### (most relevant) Scripts
 
-- **`compute_divercity_osm.py`**:
-This is the main script for computing DiverCity metrics using the radial sampling method and path penalization technique. It loads or downloads the road network, performs radial sampling, computes alternative routes, and calculates DiverCity metrics. Results are saved as JSON files for further analysis and visualization.
+* **`compute_divercity_osm.py`**:
+  This is the **main execution script** for computing DiverCity metrics across cities. It loads or downloads the corresponding road network, performs **radial sampling** of origin-destination pairs, and applies the **path penalization** algorithm to generate multiple near-shortest routes. The script computes DiverCity values for each trip, combining the number and spatial diversity of the obtained routes.
+
+* **`divercity_utils.py`**:
+  This module contains the **core functions** for DiverCity computation. It implements the logic to evaluate near-shortest routes, calculate weighted Jaccard similarity, derive spatial spread, and aggregate DiverCity values at the trip and city levels.
+
+* **`routing_utils.py`**:
+  This module provides **routing and graph-processing utilities**. It handles shortest-path calculations, iterative edge penalization, and parallelized path generation using NetworkX and igraph.
+
+* **`simplified_model.py`**:
+  This module implements the **synthetic grid-based model** used to study DiverCity mechanisms in an abstract, controlled setting. It allows users to define grid size, attractor placement, water obstacles, and bridge connections, and to simulate changes in speed limits or network configuration.
+
+*Other scripts* such as `figures.py`, `network_measures.py`, `results_utils.py`, `route_plotting.py`, and `trip_measures.py` act as **helper modules**. They handle data post-processing, visualization, and computation of supplementary measures used for figure generation, network characterization, and validation of the main results.
+
 
 ---
 
