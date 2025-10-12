@@ -58,7 +58,7 @@ This project uses the following versions:
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 
 * **Python**: 3.10 (recommended). The code uses OSMnx + igraph and parallel processing.
-* `environment.yml` is provided for reproducibility. Install via `conda env create -f environment.yml`.
+* `environment.yml` is provided for reproducibility. Install via `conda env create -f environment.yml` ($\approx$ 2 mins).
 
 <a id='abstract' name='abstract'></a>
 ## Overview
