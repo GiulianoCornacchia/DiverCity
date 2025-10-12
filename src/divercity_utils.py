@@ -15,9 +15,9 @@ import subprocess
 
 
 
-def compute_divercity_city(city_name, city_center, exp_id, list_p, list_eps, k, attribute, 
+def compute_divercity_city(city_name, city_center, exp_id, list_p, list_eps, k, attribute, reducespeed,
                                  min_radius_km, max_radius_km, radius_step_km, 
-                                 n_samples_circle, save_routes):
+                                 n_samples_circle, save_routes, njobs=10):
 
     """
     Compute DiverCity metrics for a single city.
@@ -34,11 +34,13 @@ def compute_divercity_city(city_name, city_center, exp_id, list_p, list_eps, k, 
         list_eps (list of float): List of epsilon values for identifying Near-Shortest Routes (NSR).
         k (int): Number of alternative routes to compute.
         attribute (str): Path attribute to optimize (e.g., "traveltime").
+        reducespeed (float): Speed reduction factor applied to mobility attractors (e.g., highways, major roads). 1 means no reduction, 0.5 halves the speed, and 0.1 makes these roads much slower.
         min_radius_km (int): Starting radius (in km) for radial sampling.
         max_radius_km (int): Ending radius (in km) for radial sampling.
         radius_step_km (int): Step size (in km) for concentric circles in radial sampling.
         n_samples_circle (int): Number of samples per circle for radial sampling.
         save_routes (int): Flag to save generated routes (1 = Yes, 0 = No).
+        njobs (int): Number of parallel jobs to use for computation.
     
     Returns:
         None. The function prints the execution time of the computation.
@@ -55,7 +57,7 @@ def compute_divercity_city(city_name, city_center, exp_id, list_p, list_eps, k, 
     str_list_p = str(list_p).replace(" ","")
     str_list_eps = str(list_eps).replace(" ","")
     
-    opts = f"-c {city_name} --lat {city_center[0]} --lng {city_center[1]} -i {exp_id} --plist {str_list_p} -k {k} --epslist {str_list_eps} -a {attribute} --rfrom {min_radius_km} --rto {max_radius_km} --rstep {radius_step_km} -n {n_samples_circle} --saveroutes {save_routes} --njobs 10"
+    opts = f"-c {city_name} --lat {city_center[0]} --lng {city_center[1]} -i {exp_id} --plist {str_list_p} -k {k} --epslist {str_list_eps} -a {attribute} --rfrom {min_radius_km} --rto {max_radius_km} --rstep {radius_step_km} -n {n_samples_circle} --saveroutes {save_routes} --njobs {njobs} --reducespeed {reducespeed}"
     
     command_list = ['python', "compute_divercity_osm.py"] + opts.split(" ")
     
@@ -111,7 +113,60 @@ def convert_to_cartesian(lng, lat):
 
 
 def perform_sampling(G, r_list, city_center, n_samples_circle, th_distance):#, kd_tree):
-    
+
+    """
+    Perform radial sampling of origin–destination (OD) points on a city's road network.
+
+    This function generates sample points located along concentric circles centered 
+    on the specified city center. For each sampled point, it identifies the nearest 
+    node in the given road network using a KD-tree search. The output includes 
+    the sampled points, their nearest network nodes, and diagnostic information 
+    such as node distances and unmatched points.
+
+    Parameters
+    ----------
+    G : networkx.MultiDiGraph
+        The road network graph (typically extracted from OpenStreetMap using OSMnx).  
+        Nodes must contain 'x' (longitude) and 'y' (latitude) attributes.
+    r_list : list of float
+        List of radii (in kilometers) defining the concentric circles along which 
+        points are sampled.
+    city_center : tuple of float
+        Geographic coordinates (latitude, longitude) of the city center.
+    n_samples_circle : int
+        Number of sampling points per circle (i.e., angular sampling density).
+    th_distance : float
+        Maximum allowed distance (in kilometers) between a sampled point and 
+        its closest network node. Points beyond this threshold are considered 
+        "outside" and excluded from the final sample.
+
+    Returns
+    -------
+    sampling_info : dict
+        A dictionary containing all sampling-related outputs:
+        
+        - **sampling_parameters** : dict  
+          The parameters used in the sampling process (`r_list`, `n_samples_circle`, `th_distance`).
+        
+        - **sampled_points** : dict  
+          Longitude–latitude coordinates of sampled points for each radius.
+        
+        - **gpd_points** : dict  
+          GeoDataFrames (`geopandas.GeoDataFrame`) of sampled points by radius.
+        
+        - **sampled_nodes** : dict  
+          IDs of the closest network nodes to each sampled point.
+        
+        - **points_outside** : dict  
+          Points whose nearest node exceeds the threshold distance (`th_distance`).
+        
+        - **sampled_node_distance** : dict  
+          Great-circle distances (in kilometers) between each sampled point and its nearest node.
+        
+        - **sampled_nodes_coordinates** : dict  
+          Mapping of sampled node IDs to their geographic coordinates.
+
+    """
     
     # GeoPandas representing the sampled points
     gpd_points = {}
@@ -314,34 +369,23 @@ def weighted_jaccard_similarity(list1, list2, dict_weights):
 
 
 
-
-
-
 def parallel_compute_divercity_score_weighted(routing_elements, r, max_k, dict_paths_pp, n_points_circle, list_p, list_eps, dict_weight, results_dict):
     
 
     r = float(r)
-    
     dict_scores = {}
-
     n_points_circle = len(routing_elements[r])
 
     for ind_src in range(n_points_circle):
-
         for ind_dest in range(n_points_circle):
 
             key_od = f"{ind_src}_{ind_dest}"
-
+            
             if key_od in dict_paths_pp[r]:
-
                 dict_scores[key_od] = {}
-
                 for eps in list_eps:
-
                     dict_scores[key_od][eps] = {}
-
                     for p in list_p:
-                        
                         try:
                             list_paths = dict_paths_pp[r][key_od][p]
                         except:

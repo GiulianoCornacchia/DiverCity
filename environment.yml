@@ -1,0 +1,16 @@
+name: divercity
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy=1.26.4
+  - python=3.10
+  - scipy=1.15.2
+  - ipykernel
+  - osmnx=2.0.4
+  - geopy=2.4.1
+  - lz4=4.3.3
+  - msgpack-python=1.1.0
+  - python-igraph=0.9.11
+  - pandas=1.5.3
+  - seaborn=0.13.2
